@@ -1,9 +1,15 @@
-// Global app controller
-import logs from './test';
-// const logs = require('./test');
-const ss = 55;
-const array1 = [1, 2, 3, 4, 5];
-console.log(`Imported ${logs.cons()} form test and good and const ${ss}`);
-array1.forEach(element => {
-    console.log(element);
-});
+const APIKey = `15ea0962498b45de85baff42fac0a281`;
+console.log(`Started`);
+
+const getData = async () => {
+    try {
+        // let data = await fetch(`https://api.spoonacular.com/recipes/search?apiKey=${APIKey}&query=cheese&number=2`);
+        let data = await fetch(`https://api.spoonacular.com/recipes/215435/information/?apiKey=${APIKey}`);
+
+        let json = await data.json();
+        console.log(json);
+    } catch (error) {
+        console.log(error);
+    }
+};
+getData();
