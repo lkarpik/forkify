@@ -1,15 +1,40 @@
-const APIKey = `15ea0962498b45de85baff42fac0a281`;
-console.log(`Started`);
+import axios from 'axios';
 
-const getData = async () => {
-    try {
-        // let data = await fetch(`https://api.spoonacular.com/recipes/search?apiKey=${APIKey}&query=cheese&number=2`);
-        let data = await fetch(`https://api.spoonacular.com/recipes/215435/information/?apiKey=${APIKey}`);
+import Search from './models/Search';
 
-        let json = await data.json();
-        console.log(json);
-    } catch (error) {
-        console.log(error);
+
+/** Global state of app
+ * - Search object
+ * - Current recipe object
+ * - Liked recipes 
+ */
+const state = {};
+
+const controlSearch = async () => {
+    // Get query from view
+    const query = `bean`;
+
+    if (query) {
+        // New search object added to state
+        state.search = new Search(query, 20);
+
+        // Prepare UI for results
+
+        // Search for recipes
+        await state.search.getResults();
+
+        // Render results on UI
+
     }
-};
-getData();
+
+    console.log(state);
+}
+
+
+document.querySelector('.search').addEventListener('click', e => {
+    e.preventDefault();
+    controlSearch();
+});
+
+
+const newDish = new Search(`potato`, 3);
