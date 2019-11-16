@@ -1,7 +1,8 @@
-import axios from 'axios';
-
 import Search from './models/Search';
-
+import * as searchView from './views/searchView';
+import {
+    elements
+} from './views/base';
 
 /** Global state of app
  * - Search object
@@ -10,30 +11,32 @@ import Search from './models/Search';
  */
 const state = {};
 
-const controlSearch = async () => {
-    // Get query from view
-    const query = `bean`;
+const controlSearch = async (query) => {
 
     if (query) {
         // New search object added to state
         state.search = new Search(query, 20);
 
         // Prepare UI for results
-
+        searchView.clearInput();
+        searchView.clearResults();
         // Search for recipes
         await state.search.getResults();
 
         // Render results on UI
 
+        searchView.renderResults(state.search.results);
+
     }
 
-    console.log(state);
+    console.log(state.search.results);
 }
 
 
-document.querySelector('.search').addEventListener('click', e => {
+elements.searchButton.addEventListener('click', e => {
     e.preventDefault();
-    controlSearch();
+    let q = searchView.getInput();
+    controlSearch(q);
 });
 
 
