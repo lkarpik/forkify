@@ -17,11 +17,13 @@ const controlSearch = async (query) => {
 
     if (query) {
         // New search object added to state
-        state.search = new Search(query, 20);
+        state.search = new Search(query, 30);
 
         // Prepare UI for results
         searchView.clearInput();
         searchView.clearResults();
+        searchView.clearButtons();
+
         renderLoader(elements.searchResults);
         // Search for recipes
         await state.search.getResults();
@@ -33,13 +35,29 @@ const controlSearch = async (query) => {
     }
 
     console.log(state.search.results);
-}
+};
 
 
 elements.searchButton.addEventListener('click', e => {
     e.preventDefault();
     let q = searchView.getInput();
     controlSearch(q);
+});
+
+elements.searchResultPages.addEventListener('click', e => {
+
+    const btn = e.target.closest('.btn-inline', );
+    if (btn) {
+
+        const page = parseInt(btn.dataset.goto);
+
+        searchView.clearInput();
+        searchView.clearResults();
+        searchView.clearButtons();
+        renderLoader(elements.searchResults);
+        searchView.renderResults(state.search.results, page);
+        clearLoader(elements.searchResults);
+    }
 });
 
 

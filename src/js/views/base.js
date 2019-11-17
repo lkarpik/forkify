@@ -2,7 +2,8 @@ export const elements = {
     searchInput: document.querySelector('.search__field'),
     searchButton: document.querySelector('.search .btn'),
     searchResultList: document.querySelector('.results__list'),
-    searchResults: document.querySelector('.results')
+    searchResults: document.querySelector('.results'),
+    searchResultPages: document.querySelector('.results__pages')
 
 };
 
@@ -27,4 +28,4 @@ export const clearLoader = parrent => {
     if (loader) {
         loader.remove();
     }
-}
+};
