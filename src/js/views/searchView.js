@@ -42,7 +42,7 @@ const renderRecipe = recipe => {
 
 export const renderResults = (recipes, page = 1, resPerPage = 10) => {
     const start = (page - 1) * resPerPage;
-    const end = resPerPage * page - 1;
+    const end = resPerPage * page;
 
-    recipes.forEach(renderRecipe);
+    recipes.slice(start, end).forEach(renderRecipe);
 }
