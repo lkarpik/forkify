@@ -13,10 +13,13 @@ export const clearResults = () => {
 }
 
 const limitTitle = (title, limit = 17) => {
+
     if (title.length > limit) {
         let newTitle = title.slice(0, limit);
-        return newTitle + '...';
+        newTitle = newTitle.slice(0, newTitle.lastIndexOf(` `));
+        return newTitle + ' ...';
     }
+
     return title;
 }
 
@@ -37,6 +40,9 @@ const renderRecipe = recipe => {
     elements.searchResultList.insertAdjacentHTML('beforeend', markup);
 }
 
-export const renderResults = (recipes) => {
+export const renderResults = (recipes, page = 1, resPerPage = 10) => {
+    const start = (page - 1) * resPerPage;
+    const end = resPerPage * page - 1;
+
     recipes.forEach(renderRecipe);
 }
