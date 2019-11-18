@@ -1,4 +1,5 @@
 import Search from './models/Search';
+import Recipe from './models/Recipe';
 import * as searchView from './views/searchView';
 import {
     elements,
@@ -13,6 +14,11 @@ import {
  */
 const state = {};
 
+
+/**
+ * Search controller
+ * @param {string} query 
+ */
 const controlSearch = async (query) => {
 
     if (query) {
@@ -26,15 +32,17 @@ const controlSearch = async (query) => {
 
         renderLoader(elements.searchResults);
         // Search for recipes
-        await state.search.getResults();
+        try {
+            await state.search.getResults();
+            // Render results on UI
+            searchView.renderResults(state.search.results);
+            clearLoader(elements.searchResults);
 
-        // Render results on UI
-        searchView.renderResults(state.search.results);
-        clearLoader(elements.searchResults);
-
+        } catch (error) {
+            console.log(error);
+            clearLoader(elements.searchResults);
+        }
     }
-
-    console.log(state.search.results);
 };
 
 
@@ -60,5 +68,38 @@ elements.searchResultPages.addEventListener('click', e => {
     }
 });
 
+/**
+ * Recipe controller
+ * 
+ */
+const controllRecipe = async (e) => {
 
-const newDish = new Search(`potato`, 3);
+    // const id = e.newURL.split('/#')[1];
+    const id = window.location.hash.replace('#', '');
+    if (id) {
+
+        // Prepare UI
+
+        // Create new Recipe
+        state.recipe = new Recipe(id);
+
+        try {
+            await state.recipe.getRecipe();
+            // Render recipe
+            console.log(state);
+
+        } catch (error) {
+            console.log(error);
+        }
+        // Get data
+    }
+}
+
+// window.addEventListener('hashchange', controllRecipe);
+// window.addEventListener('load', controllRecipe);
+
+['hashchange', 'load'].forEach(e => window.addEventListener(e, controllRecipe));
+
+// const r = new Recipe(111364);
+// r.getRecipe();
+// console.log(r);

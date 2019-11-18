@@ -1,4 +1,7 @@
 import axios from 'axios';
+import {
+    APIKey
+} from '../config';
 
 export default class Search {
 
@@ -9,8 +12,6 @@ export default class Search {
     }
 
     async getResults() {
-
-        const APIKey = `15ea0962498b45de85baff42fac0a281`;
 
         try {
 
