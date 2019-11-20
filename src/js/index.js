@@ -51,6 +51,12 @@ elements.searchButton.addEventListener('click', e => {
     let q = searchView.getInput();
     controlSearch(q);
 });
+// TEST
+window.addEventListener('load', e => {
+    e.preventDefault();
+    let q = `honey`;
+    controlSearch(q);
+});
 
 elements.searchResultPages.addEventListener('click', e => {
 
@@ -86,7 +92,9 @@ const controllRecipe = async (e) => {
         try {
             await state.recipe.getRecipe();
             // Render recipe
-            console.log(state);
+            console.log(state.recipe);
+            // TESTING
+            window.state = state;
 
         } catch (error) {
             console.log(error);
@@ -99,7 +107,3 @@ const controllRecipe = async (e) => {
 // window.addEventListener('load', controllRecipe);
 
 ['hashchange', 'load'].forEach(e => window.addEventListener(e, controllRecipe));
-
-// const r = new Recipe(111364);
-// r.getRecipe();
-// console.log(r);
