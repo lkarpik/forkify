@@ -15,6 +15,7 @@ export default class Recipe {
             const res = await axios(`https://api.spoonacular.com/recipes/${this.id}/information/?apiKey=${APIKey}`);
 
             console.log(res);
+
             this.title = res.data.title;
             this.author = res.data.sourceName;
             this.img = res.data.image;
@@ -22,6 +23,7 @@ export default class Recipe {
             this.ingredients = res.data.extendedIngredients;
             this.readyInMinutes = res.data.readyInMinutes;
             this.servings = res.data.servings;
+            this.instruction = res.data.instructions;
 
 
         } catch (error) {
@@ -33,7 +35,7 @@ export default class Recipe {
         const newIngredients = this.ingredients.map(el => {
 
             return {
-                count: el.measures.metric.amount % 1 === 0 ? el.measures.metric.amount : el.measures.metric.amount.toFixed(2),
+                count: el.measures.metric.amount % 1 === 0 ? el.measures.metric.amount : parseFloat(el.measures.metric.amount.toFixed(2)),
                 unit: el.measures.metric.unitShort || '',
                 ingredient: el.name
             };

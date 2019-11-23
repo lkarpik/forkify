@@ -1,6 +1,7 @@
 import Search from './models/Search';
 import Recipe from './models/Recipe';
 import * as searchView from './views/searchView';
+import * as recipeView from './views/recipeView';
 import {
     elements,
     renderLoader,
@@ -86,20 +87,28 @@ const controllRecipe = async (e) => {
 
         // Prepare UI
 
+        recipeView.clearRecipe();
+        renderLoader(elements.recipe);
+
         // Create new Recipe
         state.recipe = new Recipe(id);
 
         try {
+            // Get data
             await state.recipe.getRecipe();
+            state.recipe.getIngredients();
             // Render recipe
-            console.log(state.recipe);
+            clearLoader(elements.recipe);
+            recipeView.renderRecipe(state.recipe);
+
             // TESTING
+            console.log(state.recipe);
             window.state = state;
 
         } catch (error) {
             console.log(error);
         }
-        // Get data
+
     }
 }
 
