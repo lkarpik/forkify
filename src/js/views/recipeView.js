@@ -1,6 +1,37 @@
 import {
     elements
 } from './base';
+import {
+    Fraction
+} from 'fractional';
+
+const formatCount = count => {
+
+    if (count) {
+
+        const [int, dec] = count.toString().split('.').map(el => parseInt(el, 10));
+
+        if (!dec) return count;
+
+
+        if (int === 0) {
+            const fr = new Fraction(count);
+            if (fr.denominator > 4) {
+                return count.toFixed(2);
+            } else {
+                return `${fr.numerator}/${fr.denominator}`;
+            }
+        } else {
+            console.log(count, int);
+            const fr = new Fraction(count - int);
+            if (fr.denominator > 4) {
+                return count.toFixed(2);
+            } else {
+                return `${int} ${fr.numerator}/${fr.denominator}`;
+            }
+        }
+    }
+};
 
 
 export const clearRecipe = () => {
@@ -12,7 +43,7 @@ const createIngredient = el => `
         <svg class="recipe__icon">
             <use href="img/icons.svg#icon-check"></use>
         </svg>
-        <div class="recipe__count">${el.count}</div>
+        <div class="recipe__count">${formatCount(el.count)}</div>
         <div class="recipe__ingredient">
             <span class="recipe__unit">${el.unit}</span>
             ${el.ingredient}
@@ -49,12 +80,12 @@ export const renderRecipe = recipe => {
                 <span class="recipe__info-text"> servings</span>
 
                 <div class="recipe__info-buttons">
-                    <button class="btn-tiny">
+                    <button class="btn-tiny btn-decrease">
                         <svg>
                             <use href="img/icons.svg#icon-circle-with-minus"></use>
                         </svg>
                     </button>
-                    <button class="btn-tiny">
+                    <button class="btn-tiny btn-increase">
                         <svg>
                             <use href="img/icons.svg#icon-circle-with-plus"></use>
                         </svg>

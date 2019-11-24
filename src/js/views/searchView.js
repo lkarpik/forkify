@@ -19,6 +19,19 @@ export const clearButtons = () => {
     });
 };
 
+export const highlightSelected = id => {
+
+    if (document.querySelector(`.results__link--active`)) {
+        document.querySelector(`.results__link--active`).classList.remove('results__link--active');
+
+    }
+
+    if (document.querySelector(`a[href="#${id}"]`)) {
+
+        document.querySelector(`a[href="#${id}"]`).classList.add('results__link--active');
+    }
+}
+
 const limitTitle = (title, limit = 17) => {
 
     if (title.length > limit) {
@@ -34,7 +47,7 @@ const renderRecipe = recipe => {
 
     const markup = `
     <li>
-        <a class="results__link results__link--active" href="#${recipe.id}">
+        <a class="results__link" href="#${recipe.id}">
             <figure class="results__fig">
                 <img src="https://spoonacular.com/recipeImages/${recipe.image}" alt="${recipe.title}">
             </figure>
