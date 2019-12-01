@@ -26,13 +26,13 @@ export const highlightSelected = id => {
 
     }
 
-    if (document.querySelector(`a[href="#${id}"]`)) {
+    if (document.querySelector(`.results__link[href="#${id}"]`)) {
 
-        document.querySelector(`a[href="#${id}"]`).classList.add('results__link--active');
+        document.querySelector(`.results__link[href="#${id}"]`).classList.add('results__link--active');
     }
 }
 
-const limitTitle = (title, limit = 17) => {
+export const limitTitle = (title, limit = 17) => {
 
     if (title.length > limit) {
         let newTitle = title.slice(0, limit);
