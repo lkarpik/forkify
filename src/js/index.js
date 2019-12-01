@@ -19,8 +19,11 @@ import {
  * - Shopping list object
  * - Liked recipes 
  */
-const state = {};
 
+const state = {};
+// TESTING
+console.log(state);
+window.state = state;
 
 /**
  * Search controller
@@ -59,13 +62,6 @@ elements.searchButton.addEventListener('click', e => {
     controlSearch(q);
 });
 
-// TEST
-window.addEventListener('load', e => {
-    e.preventDefault();
-    let q = `honey`;
-    controlSearch(q);
-    state.likes = new Likes();
-});
 
 elements.searchResultPages.addEventListener('click', e => {
 
@@ -112,11 +108,6 @@ const controlRecipe = async (e) => {
                 state.recipe,
                 state.likes.isLiked(id)
             );
-            likesView.toglleLikeMenu(state.likes.getNumLikes());
-
-            // TESTING
-            console.log(state.recipe);
-            window.state = state;
 
         } catch (error) {
             console.log(error);
@@ -142,7 +133,7 @@ const controlLike = () => {
             state.recipe.title,
             state.recipe.author,
             state.recipe.img,
-        )
+        );
         // Toggle button
         likesView.toggleLikeBtn(true);
 
@@ -158,7 +149,23 @@ const controlLike = () => {
         likesView.deleteLike(currID);
     }
     likesView.toglleLikeMenu(state.likes.getNumLikes())
-}
+};
+
+// Restore data on page load
+window.addEventListener('load', e => {
+
+    state.likes = new Likes();
+
+    // Restore likes
+    state.likes.readStorage();
+
+    // Toggle button
+    likesView.toglleLikeMenu(state.likes.getNumLikes());
+
+    // Render likes
+    state.likes.likes.forEach(el => likesView.renderLike(el));
+});
+
 
 /**
  * Recipe buttons handler
