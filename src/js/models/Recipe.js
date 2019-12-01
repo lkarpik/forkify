@@ -35,7 +35,7 @@ export default class Recipe {
         const newIngredients = this.ingredients.map(el => {
 
             return {
-                count: el.measures.metric.amount % 1 === 0 ? el.measures.metric.amount : parseFloat(el.measures.metric.amount.toFixed(2)),
+                count: el.measures.metric.amount,
                 unit: el.measures.metric.unitShort || '',
                 ingredient: el.name
             };

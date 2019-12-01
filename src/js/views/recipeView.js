@@ -5,29 +5,37 @@ import {
     Fraction
 } from 'fractional';
 
+
 const formatCount = count => {
 
     if (count) {
 
-        const [int, dec] = count.toString().split('.').map(el => parseInt(el, 10));
+        const [int, dec] = count.toFixed(2).split('.').map(el => parseInt(el));
 
-        if (!dec) return count;
-
+        if (!dec) return int;
 
         if (int === 0) {
+
             const fr = new Fraction(count);
-            if (fr.denominator > 4) {
+
+            if (fr.denominator > 5) {
                 return count.toFixed(2);
             } else {
                 return `${fr.numerator}/${fr.denominator}`;
             }
         } else {
-            console.log(count, int);
-            const fr = new Fraction(count - int);
-            if (fr.denominator > 4) {
-                return count.toFixed(2);
-            } else {
-                return `${int} ${fr.numerator}/${fr.denominator}`;
+            try {
+                const fr = new Fraction(count - int);
+
+                if (fr.denominator > 5) {
+
+                    return count.toFixed(2);
+                } else {
+                    return `${int} ${fr.numerator}/${fr.denominator}`;
+                }
+
+            } catch (error) {
+                console.log(error);
             }
         }
     }
@@ -103,20 +111,10 @@ export const renderRecipe = recipe => {
         </div>
         <div class="recipe__ingredients">
             <ul class="recipe__ingredient-list">
-                ${recipe.ingredients.map(el=>createIngredient(el)).join('')}
-                <li class="recipe__item">
-                    <svg class="recipe__icon">
-                        <use href="img/icons.svg#icon-check"></use>
-                    </svg>
-                    <div class="recipe__count">1000</div>
-                    <div class="recipe__ingredient">
-                        <span class="recipe__unit">g</span>
-                        pasta
-                    </div>
-                </li>
+                ${recipe.ingredients.map(createIngredient).join('')}
             </ul>
 
-            <button class="btn-small recipe__btn">
+            <button class="btn-small recipe__btn recipe__btn--add">
                 <svg class="search__icon">
                     <use href="img/icons.svg#icon-shopping-cart"></use>
                 </svg>
